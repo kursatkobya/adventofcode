@@ -1,6 +1,6 @@
 #include <climits>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <unordered_map>
 #include <string>
 #include <vector>
@@ -64,11 +64,11 @@ int Solution::solveB()
 
 int main()
 {
-    std::cout << "Side A" << std::endl;
+    std::cout << "Part A" << std::endl;
     Solution side_A{"../day1/input"};
     std::cout << side_A.solveA() << std::endl;
 
-    std::cout << "Side B" << std::endl;
+    std::cout << "Part B" << std::endl;
     std::cout << side_A.solveB() << std::endl;
     return 0;
 }
