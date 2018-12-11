@@ -23,15 +23,21 @@ public:
     }
 
     int partA();
-    int partB();
+    std::string partB();
 private:
     std::ifstream              m_input;
     std::vector<std::string>   m_inputVector;
 
-    int countCharacter(char character, std::string id) {
-        return std::count(id.begin(), id.end(), character);
-    }
+    int countCharacter(char character, std::string id);
+
+    std::string findIntersection(std::string first, std::string second);
 };
+
+int Solution::countCharacter(char character, std::string id)
+{
+    return std::count(id.begin(), id.end(), character);
+}
+
 
 int Solution::partA()
 {
@@ -55,9 +61,40 @@ int Solution::partA()
     return twos * threes;
 }
 
-int Solution::partB()
+
+std::string Solution::findIntersection(std::string first, std::string second)
 {
-    return 1;
+    auto first1 = first.begin();
+    auto last1 = first.end();
+    auto first2 = second.begin();
+    auto last2 = second.end();
+    std::string output{""};
+
+    while (first1 != last1 && first2 != last2) {
+        if (*first1 == *first2) {
+            output += *first1;
+        }
+        ++first1; ++first2;
+    }
+    return output;
+}
+
+std::string Solution::partB()
+{
+    std::string result{""};
+
+    for(auto id = m_inputVector.begin(); id != m_inputVector.end(); ++id) {
+        for(auto idCompare = id+1; idCompare != m_inputVector.end(); ++idCompare) {
+            std::string matchedID = findIntersection(*id, *idCompare);
+            if (matchedID.size() == id->size()-1 &&
+                matchedID.size() == idCompare->size()-1 &&
+                result.size() < matchedID.size()) {
+                result = matchedID;
+            }
+        }
+    }
+
+    return result;
 }
 
 int main()
@@ -66,5 +103,7 @@ int main()
     std::cout << "Part A" << std::endl;
     std::cout << solve.partA() << std::endl;
 
+    std::cout << "Part B" << std::endl;
+    std::cout << solve.partB() << std::endl;
     return 0;
 }
