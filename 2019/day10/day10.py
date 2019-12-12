@@ -1,22 +1,50 @@
+from typing import List, Tuple
+from math import gcd
 
 
 with open('input') as f:
     map = [[c for c in line] for line in f.read().strip().split('\n')]
 
-print(map)
-column = len(map)
-row = len(map[0])
+def locate_astroids(space_map: List[List[str]]) -> List[Tuple[int, int]]:
+    column = len(space_map)
+    row = len(space_map[0])
+    astroids = []
+    for k in range(column):
+        for l in range(row):
+             if space_map[k][l] == "#":
+                 astroids.append((k, l))
+    return astroids
 
 
-new_orleans_map = [[0 * i for i in range(column)] for j in range(row)]
-for k in range(column):
-    for l in range(row):
-        new_orleans_map[k][l] = 0
-        for i in range(column):
-            for j in range(row):
-                if map[i][j] == "#" and (i+k) % 2 == 0 and (l+j) % 2 == 0:
-                    if map[(i+k)//2][(l+j)//2] == ".":
-                        new_orleans_map[k][l] += 1
+def in_line_of_sight(astroid1: Tuple[int, int], astroid2: Tuple[int, int]) -> bool:
+    dx, dy = abs(astroid2[0] - astroid1[0]), abs(astroid2[1] - astroid1[1])
+    return gcd(dx, dy) == 1
 
-for line in new_orleans_map:
-    print(line)
+
+def blocker_list(astroid1: Tuple[int, int], astroid2: Tuple[int, int]) -> List[Tuple[int, int]]:
+    dx, dy = abs(astroid2[0] - astroid1[0]), abs(astroid2[1] - astroid1[1])
+    if dx == 0 or dy == 0:
+        steps = max(abs(dx), abs(dy))
+    else :
+        steps = gcd(abs(dx), abs(dy))
+    return [(astroid1[0] + step * dx // steps, astroid1[1] + step * dy // steps)
+            for step in range(1, steps)]
+
+
+def can_see(astroid1: Tuple[int, int], astroid2: Tuple[int, int]) -> bool:
+    if astroid1 == astroid2:
+        return False
+    if in_line_of_sight(astroid1, astroid2):
+        return True
+    return not any(ast in astroids for ast in blocker_list(astroid1, astroid2))
+
+
+with open('input') as f:
+    map = [[c for c in line] for line in f.read().strip().split('\n')]
+
+astroids = locate_astroids(map)
+views = {}
+for ast in astroids:
+    views[ast] = sum([can_see(ast, other) for other in astroids])
+
+print(max(views.items(), key = lambda item: item[1]))
