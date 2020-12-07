@@ -6,7 +6,7 @@
 class Solution
 {
   public:
-  explicit Solution(const std::string& file_path) : m_input_{file_path, std::ios::binary}
+  explicit Solution(const std::string &file_path) : m_input_{file_path, std::ios::binary}
   {
     if (m_input_.fail())
     {

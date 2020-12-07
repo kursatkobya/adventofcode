@@ -114,7 +114,7 @@ class Solution
         {
           continue;
         }
-                  return false;
+        return false;
       }
 
       std::vector<std::string> valid_colors{"amb", "blu", "brn", "gry", "grn", "hzl", "oth"};
