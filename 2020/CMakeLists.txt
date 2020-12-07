@@ -16,6 +16,7 @@ add_custom_target(
         COMMAND /usr/bin/clang-tidy
         ${ALL_SOURCE_FILES}
         -config=''
+        -fix
         --
         -std=c++17
         ${INCLUDE_DIRECTORIES}
@@ -25,3 +26,4 @@ add_executable(day1 day1/solve.cpp)
 add_executable(day2 day2/solve.cpp)
 add_executable(day3 day3/solve.cpp)
 add_executable(day4 day4/solve.cpp)
+add_executable(day5 day5/solve.cpp)
