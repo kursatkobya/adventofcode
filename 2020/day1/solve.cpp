@@ -5,72 +5,72 @@
 
 class Solution
 {
-public:
-        Solution(std::string filePath) : m_input{filePath, std::ios::binary}
-        {
-                if (m_input.fail())
-                {
-                        std::cout << "Error opening " << filePath;
-                }
-                std::string str;
-                while (std::getline(m_input, str))
-                {
-                        m_inputVector.push_back(std::stoi(str));
-                }
-        }
+  public:
+  explicit Solution(const std::string& file_path) : m_input_{file_path, std::ios::binary}
+  {
+    if (m_input_.fail())
+    {
+      std::cout << "Error opening " << file_path;
+    }
+    std::string str;
+    while (std::getline(m_input_, str))
+    {
+      m_input_vector_.push_back(std::stoi(str));
+    }
+  }
 
-        int solveA();
-        int solveB();
+  int solve_a();
+  int solve_b();
 
-private:
-        std::ifstream m_input;
-        std::vector<int> m_inputVector;
+  private:
+  std::ifstream m_input_;
+  std::vector<int> m_input_vector_;
 };
 
-int Solution::solveA()
+int Solution::solve_a()
 {
-        std::string str;
-        for (int i = 0; i < m_inputVector.size() - 1; ++i)
-        {
-                for (int j = i + 1; j < m_inputVector.size(); ++j)
-                {
-                        if (m_inputVector[i] + m_inputVector[j] == 2020)
-                        {
-                                return m_inputVector[i] * m_inputVector[j];
-                        }
-                }
-        }
+  std::string str;
+  for (int i = 0; i < m_input_vector_.size() - 1; ++i)
+  {
+    for (int j = i + 1; j < m_input_vector_.size(); ++j)
+    {
+      if (m_input_vector_[i] + m_input_vector_[j] == 2020)
+      {
+        return m_input_vector_[i] * m_input_vector_[j];
+      }
+    }
+  }
 
-        return 0;
+  return 0;
 }
 
-int Solution::solveB()
+int Solution::solve_b()
 {
-        std::string str;
-        for (int i = 0; i < m_inputVector.size() - 2; ++i)
+  std::string str;
+  for (int i = 0; i < m_input_vector_.size() - 2; ++i)
+  {
+    for (int j = i + 1; j < m_input_vector_.size() - 1; ++j)
+    {
+      for (int k = j + 1; k < m_input_vector_.size(); ++k)
+      {
+        if (m_input_vector_[i] + m_input_vector_[j] + m_input_vector_[k] == 2020)
         {
-                for (int j = i + 1; j < m_inputVector.size() - 1; ++j)
-                {
-                        for (int k = j + 1; k < m_inputVector.size(); ++k)
-                        {
-                                if (m_inputVector[i] + m_inputVector[j] + m_inputVector[k] == 2020)
-                                {
-                                        return m_inputVector[i] * m_inputVector[j] * m_inputVector[k];
-                                }
-                        }
-                }
+          return m_input_vector_[i] * m_input_vector_[j] * m_input_vector_[k];
         }
+      }
+    }
+  }
 
-        return 0;
+  return 0;
 }
 
 int main()
 {
-        Solution day1{"../day1/input"};
-        std::cout << "Part A" << std::endl;
-        std::cout << day1.solveA() << std::endl;
-        std::cout << "Part B" << std::endl;
-        std::cout << day1.solveB() << std::endl;
+  Solution day1{"../day1/input"};
+  std::cout << "Part A" << std::endl;
+  std::cout << day1.solve_a() << std::endl;
+  std::cout << "Part B" << std::endl;
+  std::cout << day1.solve_b() << std::endl;
 
-        return 0;
+  return 0;
 }
