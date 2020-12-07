@@ -17,8 +17,12 @@ class Solution
     std::string line;
     while (std::getline(input, line))
     {
-      int min_row{0}; int max_row{127}; int row{0};
-      int min_col{0}; int max_col{7}; int col{0};
+      int min_row{0};
+      int max_row{127};
+      int row{0};
+      int min_col{0};
+      int max_col{7};
+      int col{0};
       for (auto pos : line)
       {
         if (pos == 'F')
